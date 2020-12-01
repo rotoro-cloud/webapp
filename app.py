@@ -1,6 +1,5 @@
 import os
 import random
-import signal
 from flask import Flask
 app = Flask(__name__)
 
