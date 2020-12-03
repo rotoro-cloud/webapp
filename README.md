@@ -4,10 +4,10 @@ This simple web application using [Python Flask](http://flask.pocoo.org/) use fo
   
   There are the steps required to get it working on linux.
   
-  - Install OS dependencies
-  - Install app dependencies
-  - Deploy the app source code
-  - Start the webserver
+  - Установи зависимости ОС
+  - Установи зависимости приложения
+  - Разверни исходный код приложения
+  - Запусти веб-сервер
    
 ## 1. Install OS dependencies
   
