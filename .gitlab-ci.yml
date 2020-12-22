@@ -1,0 +1,48 @@
+variables:
+###################### orginal
+  COMMIT: $CI_BUILD_REF
+  REPO: rotoro
+  REPO_DEV: webapp_staging
+  
+  DEV_LOCAL_REGISTY: staging-workload:443
+  PROD_CLOUD_REGISTY: gcr.io
+######################
+image: docker:stable
+
+services:
+  - name: docker:18-dind
+
+stages:
+
+  - build
+  - release
+
+  
+build:
+  stage: build
+  before_script:
+    - docker login -u${repo_user} -p${repo_pass} ${DEV_LOCAL_REGISTY}
+
+  script:
+    - set -e
+    - ./script/build.sh;
+
+    - docker tag ${REPO}:${COMMIT} ${DEV_LOCAL_REGISTY}/${REPO_DEV}:${COMMIT}
+
+    - docker push ${DEV_LOCAL_REGISTY}/${REPO_DEV}:${COMMIT}
+
+release:
+  stage: release
+  before_script:
+    - docker login -u${repo_user} -p${repo_pass} ${DEV_LOCAL_REGISTY}
+
+  script:
+    - set -e
+    - docker pull ${DEV_LOCAL_REGISTY}/${REPO_DEV}:${COMMIT}
+    - docker tag ${DEV_LOCAL_REGISTY}/${REPO_DEV}:${COMMIT} ${PROD_CLOUD_REGISTY}/${gcp_prg}/webapp:latest
+
+    - echo ${gcp_service_key} | docker login -u _json_key --password-stdin https://${PROD_CLOUD_REGISTY}
+
+    - docker push ${PROD_CLOUD_REGISTY}/${gcp_prg}/webapp:latest
+
+  when: manual
