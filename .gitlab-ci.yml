@@ -25,6 +25,7 @@ build:
 
   script:
     - set -e
+    - chmod +x ./script/build.sh;
     - ./script/build.sh;
 
     - docker tag ${REPO}:${COMMIT} ${DEV_LOCAL_REGISTY}/${REPO_DEV}:${COMMIT}
