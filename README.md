@@ -32,7 +32,7 @@ This simple web application using [Python Flask](http://flask.pocoo.org/) use fo
 
 Start web command
 
-    FLASK_APP=app.py flask run --host=0.0.0.0 --port=5000
+    FLASK_APP=/opt/app.py flask run --host=0.0.0.0 --port=5000
     
 ## 6. Test
 
